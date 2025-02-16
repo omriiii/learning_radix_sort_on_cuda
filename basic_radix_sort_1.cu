@@ -22,7 +22,6 @@ thus, to keep the code simple and readable but unoptimized, these concessions ar
 #include <time.h>
 
 
-//#define ARR_LEN 3200000
 #define ARR_LEN 32
 #define THREADS_PER_BLOCK 256
 #define FAKE_DATA_ENTROPY 6
