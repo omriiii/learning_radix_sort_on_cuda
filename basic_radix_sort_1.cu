@@ -1,7 +1,8 @@
 /*
+
 *very* simple (and rigid) radix sort on cuda!
 
-this is my implementation of radix sort from scratch as a learning exercise, to help others learn as well.
+this is my implementation of radix sort from scratch as a learning exercise. my hope is by sharing this, it will help others learn as well :-)
 thus, to keep the code simple and readable but unoptimized, these concessions are made:
     1. this implementation uses "generic-kernels" that use grid-stride GLOBAL memory access patterns
     2. it does NOT use shared memory
@@ -11,7 +12,7 @@ thus, to keep the code simple and readable but unoptimized, these concessions ar
   you can see a nice graph of this implementation here: https://www.youtube.com/watch?v=0kLxAK9ANIc&t=1381s
   (if that link is a 404 for whatever reason i've attached a png of it in the repo too)
 
-- the "prefix-sum" algo is taken from cuda gems 3's chapter 39
+- the "prefix-sum" algo is taken from cuda gems 3's chapter 39, section 39-2
   you can see find it here: https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-39-parallel-prefix-sum-scan-cuda
 
 */
