@@ -24,8 +24,8 @@ thus, to keep the code simple and readable but unoptimized, these concessions ar
 
 #define ARR_LEN 32
 #define THREADS_PER_BLOCK 256
-#define FAKE_DATA_ENTROPY 6
-#define FAKE_DATA_MAX_VAL (1<<FAKE_DATA_ENTROPY)
+#define RANDOM_DATA_ENTROPY 6
+#define RANDOM_DATA_MAX_VAL (1<<RANDOM_DATA_ENTROPY)
 
 __device__ void prefixSum(int* arr,
                           int arr_len,
@@ -124,18 +124,6 @@ __global__ void radixSortKernel(int* d_data,
 
         prefixSum(d_prefix_sum, arr_len, tid);
 
-    /*
-    // debug code you can move around if you need to do an early return and view some value!
-    temp_tid = tid;
-    while (temp_tid < arr_len)
-    {
-        // copy the value over the original data since our code copies it to host and prints it after anyway
-        d_data[temp_tid] = ((~d_data[temp_tid]) & (1<<digit_offset))>>digit_offset;
-        temp_tid += blockDim.x * gridDim.x;
-    }
-    return;
-    */
-
         int total_falses = d_prefix_sum[ARR_LEN-1] + d_flipped_bit_digit[ARR_LEN-1];
         temp_tid = tid;
 
@@ -200,7 +188,7 @@ void radixSort(int h_arr[],
                                                           d_prefix_sum,
                                                           d_arr_temp,
                                                           arr_len,
-                                                          FAKE_DATA_ENTROPY);
+                                                          RANDOM_DATA_ENTROPY);
 
     clock_t end = clock();
     printf("took %f ms\n", 1000.0*(double)(end - start) / CLOCKS_PER_SEC);
@@ -253,7 +241,7 @@ int main()
     //srand(time(NULL));
     for (int i = 0; i < ARR_LEN; i++)
     {
-        h_arr[i] = rand()%FAKE_DATA_MAX_VAL;
+        h_arr[i] = rand()%RANDOM_DATA_MAX_VAL;
     }
 
     if (ARR_LEN < 256) { printArr(h_arr, ARR_LEN); }
